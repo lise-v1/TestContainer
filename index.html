@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kronespill – klassisk knipsekasse</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="cabinet">
+    <header>
+      <div>
+        <h1>KRONESPILL</h1>
+        <p>Den klassiske knipsekassa</p>
+      </div>
+      <div class="score">
+        <span>BEHOLDNING</span>
+        <strong id="coins">10</strong> kr
+      </div>
+    </header>
+
+    <section class="machine">
+      <div class="glass">
+        <div class="slots" id="slots"></div>
+        <div class="coin" id="coin" aria-hidden="true">1</div>
+        <div class="launcher">
+          <label for="power">Knipsestyrke</label>
+          <input id="power" type="range" min="25" max="95" value="58">
+          <button id="shoot">KNIPS MYNT</button>
+        </div>
+      </div>
+      <div class="tray">
+        <span>UTBETALING</span>
+        <strong id="message">Velg styrke og knips mynten.</strong>
+        <div id="payout" class="payout"></div>
+      </div>
+    </section>
+
+    <section class="controls">
+      <button id="add">+ 5 prøvekr</button>
+      <button id="reset">Start på nytt</button>
+      <span>Gratis demo – ingen ekte penger.</span>
+    </section>
+
+    <footer>
+      Klassisk inspirert kronespill. Treff en gevinstluke med presisjon og litt flaks.
+    </footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
