@@ -1,72 +1,172 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kronespill – Sirkus</title>
-<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif}
+body{background:#06234b;color:#fff;padding:8px}
+.machine{width:min(1200px,100%);margin:auto;background:#092956;border:7px solid #f5c33d;border-radius:20px;overflow:hidden;box-shadow:0 12px 35px #000}
+.marquee{position:relative;text-align:center;background:linear-gradient(#e52b1d,#a20d17);padding:10px 15px 18px;border-bottom:5px solid #ffd447}
+.marquee:before{content:"";position:absolute;left:0;right:0;top:0;height:48px;background:repeating-linear-gradient(90deg,#fff 0 42px,#e3261b 42px 84px);opacity:.9;clip-path:polygon(0 0,100% 0,86% 100%,14% 100%)}
+.lights{position:relative;color:#ffe35b;font-size:17px;letter-spacing:14px;text-shadow:0 0 10px #fff000}
+h1{position:relative;margin:2px 0;color:#ffe65c;font:900 clamp(42px,7vw,82px) Georgia,serif;letter-spacing:5px;text-shadow:5px 5px #9c1714,0 0 10px #ffdc37}
+.ribbon{position:relative;display:inline-block;background:#d92619;border:3px solid #f8c33b;padding:8px 30px;border-radius:7px;font:bold 18px Georgia;box-shadow:0 4px 0 #8c1714}
+.layout{display:grid;grid-template-columns:190px minmax(450px,1fr) 210px;gap:10px;padding:12px;background:#0b3b70}
+.panel{display:flex;flex-direction:column;gap:10px}
+.card{background:#06162e;border:4px solid #f3bf31;border-radius:10px;padding:8px;text-align:center;box-shadow:inset 0 0 12px #000}
+.card.red{border-color:#ef4430}.card.blue{border-color:#39a9ed}
+.card .label{font-weight:bold;font-size:13px;color:#fff}.card .value{font-size:36px;font-weight:900;color:#ffe03c}.card small{font-weight:bold;color:#ffe03c}
+.coinbox{background:#101820;border:4px solid #f2bd31;border-radius:12px;min-height:170px;text-align:center;padding:8px;color:#fff}
+.coinbox h3{margin:0 -2px 8px;background:#d5261b;padding:8px;border-radius:5px;font:700 20px Georgia}
+.coin{width:65px;height:65px;margin:12px auto;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff3aa,#d9a52c 55%,#71470a);border:4px solid #70450b;color:#70450b;font:bold 28px Georgia;display:grid;place-items:center}
+.coinbox button{background:#e52a1e;color:white;border:0;border-radius:7px;padding:8px 13px;font-weight:bold;cursor:pointer}
+.luck{margin-top:auto;background:#d6291d;border:3px solid #f6c53a;border-radius:9px;padding:12px;text-align:center;font:bold 25px Georgia;color:#ffe052}
+.luck small{display:block;font-size:13px;margin-top:5px}
+.game{min-width:0}
+.board{height:670px;position:relative;overflow:hidden;border:7px solid #e1a82d;border-radius:18px;background:#f6d778;box-shadow:inset 0 0 30px #8b5818}
+.board:before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 270deg at 50% 58%,rgba(255,255,255,.22) 0 9deg,rgba(206,151,35,.08) 9deg 18deg)}
+.chute{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:3;color:#d5251c;font-size:38px;font-weight:900;line-height:28px;text-align:center}
+#pegs{position:absolute;left:7%;right:7%;top:82px;height:425px}
+.peg{position:absolute;width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#4d5457 35%,#111 70%);box-shadow:1px 2px 3px #674615}
+#coinGame{display:none;position:absolute;z-index:8;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff5a7,#dca82d 55%,#75480a);border:3px solid #70450a;color:#6a420b;text-align:center;line-height:28px;font-weight:bold}
+.slots{position:absolute;bottom:0;left:0;right:0;height:125px;display:flex;z-index:5;padding:0 3px}
+.slot{flex:1;margin:0 2px;border:3px solid #18222a;background:#11477d;color:white;display:grid;place-items:center;text-align:center;font-size:23px;font-weight:900;box-shadow:inset 0 0 10px #000}
+.slot.yellow{background:#f2c21d;color:#161616}.slot.red{background:#db2c22}.slot.green{background:#2ba82a}
+.slot small{font-size:13px}
+.controls{display:grid;grid-template-columns:1fr 1fr 145px;gap:9px;margin-top:9px;background:#06172f;border:3px solid #dca72d;border-radius:10px;padding:10px}
+.control label{display:block;font-size:12px;font-weight:bold}.control output{float:right;color:#ffdf4e}
+.control input{width:100%;accent-color:#f6bd28}.scale{display:flex;justify-content:space-between;font-size:9px;color:#b9cbe0}
+.knips{background:#36aa28;border:4px solid #a9e847;border-radius:12px;color:white;font:bold 28px Georgia;cursor:pointer;text-shadow:2px 2px #12600e}
+.knips:disabled{background:#777;border-color:#aaa}
+.message{text-align:center;min-height:28px;padding:6px;color:#ffe25b;font-weight:bold}
+.clown{background:#e3291d;border:4px solid #ffd03d;border-radius:50%;height:190px;display:grid;place-items:center;font-size:100px;box-shadow:inset 0 0 18px #7f1012}
+.clownText{text-align:center;color:#ffe15a;font:bold 21px Georgia;line-height:1.1}
+.tip{margin-top:auto;background:#06172f;border:3px solid #e2aa2f;border-radius:9px;padding:12px;text-align:center;font-weight:bold;font-size:12px;color:#fff}
+.icons{display:flex;justify-content:center;gap:10px}.icons button{width:48px;height:48px;border-radius:50%;border:3px solid #f2bd31;background:#164b7d;color:#fff;font-size:20px;cursor:pointer}
+.instructions{background:#071a33;border-top:4px solid #dca72d;padding:12px;text-align:center}
+.instructions h2{margin:0 0 10px;color:#ffd33e;font:700 21px Georgia}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.step{font-size:12px;font-weight:bold}.step b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#1761a0;font-size:17px;margin-right:5px}
+footer{text-align:center;background:#030d1c;color:#8096b1;padding:8px;font-size:10px}
+
+@media(max-width:900px){.layout{grid-template-columns:1fr}.panel.left{display:grid;grid-template-columns:repeat(3,1fr)}.coinbox,.luck{margin-top:0}.panel.right{display:none}.board{height:600px}.controls{grid-template-columns:1fr 1fr}.knips{grid-column:1/-1}}
+@media(max-width:520px){body{padding:3px}.machine{border-width:4px}.layout{padding:6px}.panel.left{grid-template-columns:1fr 1fr}.card.blue{grid-column:1/-1}.board{height:500px}.steps{grid-template-columns:1fr 1fr}h1{letter-spacing:1px}.ribbon{font-size:14px;padding:6px 15px}}
+</style>
 </head>
 <body>
-<main class="machine">
-  <header class="marquee">
-    <div class="bulbs">★ ★ ★ ★ ★ ★ ★ ★ ★</div>
-    <h1>KRONESPILL</h1>
-    <div class="ribbon">KAST MYNTEN OG VINN!</div>
-  </header>
+<div class="machine">
+<header class="marquee">
+<div class="lights">★ · ★ · ★ · ★ · ★ · ★ · ★</div>
+<h1>KRONESPILL</h1>
+<div class="ribbon">★ KAST MYNTEN OG VINN! ★</div>
+</header>
 
-  <div class="layout">
-    <aside class="panel left">
-      <div class="score"><span>SALDO</span><strong id="money">100</strong><small>KR</small></div>
-      <div class="score red"><span>SISTE GEVINST</span><strong id="win">0</strong><small>KR</small></div>
-      <div class="score blue"><span>BESTE GEVINST</span><strong id="best">10</strong><small>KR</small></div>
-      <button id="add" class="coinButton">🪙<b>MYNT INNKAST</b><small>+ 5 PRØVEKR</small></button>
-      <div class="luck">LYKKE TIL!<br><span>★ ★ ★ ★</span></div>
-    </aside>
+<div class="layout">
+<aside class="panel left">
+<div class="card"><div class="label">★ SALDO ★</div><div class="value" id="money">100</div><small>KR</small></div>
+<div class="card red"><div class="label">★ SISTE GEVINST ★</div><div class="value" id="win">0</div><small>KR</small></div>
+<div class="card blue"><div class="label">★ BESTE GEVINST ★</div><div class="value" id="best">10</div><small>KR</small></div>
+<div class="coinbox">
+<h3>MYNT INNKAST</h3>
+<div class="coin">1</div>
+<button id="add">+ 5 PRØVEKR</button>
+</div>
+<div class="luck">LYKKE TIL!<small>★ ★ ★ ★</small></div>
+</aside>
 
-    <section class="game">
-      <div class="board" id="board">
-        <div class="title">✦ KNIPS ✦</div>
-        <div id="pegs"></div>
-        <div id="coin">1</div>
-        <div class="slots">
-          <div>TAP</div><div class="yellow">2<br><small>KR</small></div>
-          <div class="redslot">5<br><small>KR</small></div><div class="green">10<br><small>KR</small></div>
-          <div class="redslot">5<br><small>KR</small></div><div class="yellow">2<br><small>KR</small></div><div>TAP</div>
-        </div>
-      </div>
+<section class="game">
+<div class="board" id="board">
+<div class="chute">⌄<br>⌄<br>⌄</div>
+<div id="pegs"></div>
+<div id="coinGame">1</div>
+<div class="slots">
+<div class="slot">TAP<br>☹</div>
+<div class="slot yellow">2<br><small>KR</small></div>
+<div class="slot red">5<br><small>KR</small></div>
+<div class="slot green">10<br><small>KR</small></div>
+<div class="slot red">5<br><small>KR</small></div>
+<div class="slot yellow">2<br><small>KR</small></div>
+<div class="slot">TAP<br>☹</div>
+</div>
+</div>
+<div class="controls">
+<div class="control"><label>TRYKK-KRAFT <output id="forceOut">50%</output></label><input id="force" type="range" min="10" max="100" value="50"><div class="scale"><span>LETT</span><span>STERK</span></div></div>
+<div class="control"><label>HASTIGHET <output id="speedOut">50%</output></label><input id="speed" type="range" min="10" max="100" value="50"><div class="scale"><span>LANGSOM</span><span>RASK</span></div></div>
+<button class="knips" id="play">★ KNIPS! ★</button>
+</div>
+<div class="message" id="message">Velg kraft og hastighet</div>
+</section>
 
-      <div class="controls">
-        <div class="slider">
-          <label>TRYKK-KRAFT <output id="forceValue">50%</output></label>
-          <input id="force" type="range" min="10" max="100" value="50">
-          <small>LETT <span>STERK</span></small>
-        </div>
-        <div class="slider">
-          <label>HASTIGHET <output id="speedValue">50%</output></label>
-          <input id="speed" type="range" min="10" max="100" value="50">
-          <small>LANGSOM <span>RASK</span></small>
-        </div>
-        <button id="play" class="knips">KNIPS!</button>
-      </div>
-      <div id="message" class="message">Velg kraft og hastighet</div>
-    </section>
+<aside class="panel right">
+<div class="clown">🤡</div>
+<div class="clownText">HEI!<br>KLAR FOR<br>EN RUNDE?</div>
+<div class="tip">JUSTER KRAFT<br>OG HASTIGHET<br>OG TRYKK KNIPS!</div>
+<div class="icons"><button id="sound">🔊</button><button>♫</button></div>
+</aside>
+</div>
 
-    <aside class="panel right">
-      <div class="clown">🤡</div>
-      <div class="clownText">HEI!<br>KLAR FOR<br>EN RUNDE?</div>
-      <div class="tip">JUSTÉR INNSTILLINGENE<br>OG TRYKK KNIPS!</div>
-    </aside>
-  </div>
+<section class="instructions">
+<h2>★ SLIK SPILLER DU ★</h2>
+<div class="steps">
+<div class="step"><b>1</b> 🪙 Sett inn mynt<br>(prøvepenger)</div>
+<div class="step"><b>2</b> 🎛️ Juster trykk-kraft<br>og hastighet</div>
+<div class="step"><b>3</b> 🔴 Trykk KNIPS!<br>og mynten slippes</div>
+<div class="step"><b>4</b> ⭐ Mynten lander<br>i en lomme</div>
+</div>
+</section>
+<footer>Gratis spilldemo · Ingen ekte penger</footer>
+</div>
 
-  <section class="howto">
-    <h2>★ SLIK SPILLER DU ★</h2>
-    <div><b>1</b> 🪙 Sett inn prøvepenger</div>
-    <div><b>2</b> 🎛️ Juster kraft og hastighet</div>
-    <div><b>3</b> 👆 Trykk KNIPS!</div>
-    <div><b>4</b> ⭐ Se hvor mynten lander</div>
-  </section>
-  <footer>Gratis spilldemo · Ingen ekte penger</footer>
-</main>
-<script src="game.js"></script>
+<script>
+(function(){
+var money=100,best=10,busy=false;
+var moneyEl=document.getElementById("money"),winEl=document.getElementById("win"),bestEl=document.getElementById("best");
+var force=document.getElementById("force"),speed=document.getElementById("speed");
+var forceOut=document.getElementById("forceOut"),speedOut=document.getElementById("speedOut");
+var play=document.getElementById("play"),coin=document.getElementById("coinGame"),msg=document.getElementById("message");
+
+for(var r=0;r<8;r++){
+ for(var c=0;c<8;c++){
+  var p=document.createElement("i");p.className="peg";
+  p.style.left=(c*12+(r%2?6:0))+"%";p.style.top=(r*12)+"%";
+  document.getElementById("pegs").appendChild(p);
+ }
+}
+function ui(){moneyEl.textContent=money;forceOut.textContent=force.value+"%";speedOut.textContent=speed.value+"%";play.disabled=busy||money<1}
+force.oninput=speed.oninput=ui;
+
+document.getElementById("add").onclick=function(){money+=5;msg.textContent="+5 prøvekr lagt til.";ui()};
+
+play.onclick=function(){
+ if(busy||money<1)return;
+ money--;busy=true;winEl.textContent="0";msg.textContent="Mynten spretter...";
+ coin.style.display="block";ui();
+
+ var x=50,y=3;
+ var vx=(Number(force.value)-50)*0.075;
+ var fall=0.7+Number(speed.value)*0.018;
+
+ var timer=setInterval(function(){
+  y+=fall;x+=vx;vx*=0.985;
+  if(x<5){x=5;vx=Math.abs(vx)*.72}
+  if(x>95){x=95;vx=-Math.abs(vx)*.72}
+  coin.style.left=x+"%";coin.style.top=y+"%";
+  if(y>=82){clearInterval(timer);finish(x)}
+ },25);
+};
+
+function finish(x){
+ var i=Math.max(0,Math.min(6,Math.floor(x/100*7)));
+ var values=[0,2,5,10,5,2,0],v=values[i];
+ money+=v;winEl.textContent=v;
+ if(v>best){best=v;bestEl.textContent=best}
+ msg.textContent=v?"🎉 Gratulerer! Du vant "+v+" kr!":"TAP – prøv igjen!";
+ coin.style.display="none";busy=false;ui();
+}
+ui();
+})();
+</script>
 </body>
 </html>
