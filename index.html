@@ -1,160 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kronespill</title>
-<style>
-body{margin:0;background:#163a63;font-family:Arial,sans-serif;color:#fff;text-align:center}
-.game{max-width:700px;margin:20px auto;background:#fff;border:8px solid #f5b82e;border-radius:14px;overflow:hidden;color:#222}
-header{background:#d92b20;color:#ffe36b;padding:15px}
-h1{margin:0;font-size:42px;letter-spacing:3px}
-header p{margin:5px 0 0}
-.info{display:flex;justify-content:space-around;background:#102d50;color:#fff;padding:12px;font-weight:bold}
-.board{position:relative;margin:15px;background:#e47b2c;border:6px solid #8b531f;height:500px;overflow:hidden}
-.pegs{position:absolute;left:5%;right:5%;top:35px;height:350px}
-.peg{position:absolute;width:12px;height:12px;background:#eee;border:2px solid #555;border-radius:50%}
-.coin{position:absolute;width:28px;height:28px;border-radius:50%;background:#e9bd39;border:3px solid #80580d;left:50%;top:15px;margin-left:-17px;display:none;z-index:5;font-size:14px;line-height:28px;color:#694509;font-weight:bold}
-.slots{position:absolute;bottom:0;left:0;right:0;height:75px;display:flex}
-.slot{flex:1;border:2px solid #fff;background:#1764a0;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px}
-.slot.win{background:#e5ad24;color:#301d05}
-.controls{padding:10px 15px 20px}
-.control{margin:10px 0;text-align:left}
-label{font-weight:bold;display:block}
-input{width:100%}
-button{border:0;border-radius:8px;background:#199b36;color:white;font-size:20px;font-weight:bold;padding:13px 25px;cursor:pointer;margin:5px}
-button:hover{background:#147d2c}
-button:disabled{background:#888}
-#message{min-height:25px;font-weight:bold;color:#d52b20}
-.small{font-size:12px;color:#666;padding:0 10px 15px}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kronespill – Sirkus</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="game">
-<header>
-<h1>KRONESPILL</h1>
-<p>Klassisk knipsekasse</p>
-</header>
+<div class="lights"></div>
+<main class="cabinet">
+  <header class="marquee">
+    <div class="tent"></div>
+    <div class="bulbs">★ · ★ · ★ · ★ · ★ · ★ · ★</div>
+    <h1>KRONESPILL</h1>
+    <div class="subtitle">✦ KAST MYNTEN OG VINN! ✦</div>
+  </header>
 
-<div class="info">
-<div>Saldo: <span id="money">20</span> kr</div>
-<div>Siste gevinst: <span id="win">0</span> kr</div>
-</div>
+  <section class="content">
+    <aside class="side left">
+      <div class="display-card"><span>SALDO</span><b id="balance">100</b><em>KR</em></div>
+      <div class="display-card"><span>SISTE GEVINST</span><b id="lastWin">0</b><em>KR</em></div>
+      <div class="display-card"><span>BESTE GEVINST</span><b id="bestWin">10</b><em>KR</em></div>
+      <button class="coinbox" id="addCoin">
+        <span class="coin-icon">1</span>
+        <strong>MYNT INNKAST</strong>
+        <small>+ 5 prøvekr</small>
+      </button>
+      <div class="luck">LYKKE TIL!<small>★ ★ ★</small></div>
+    </aside>
 
-<div class="board" id="board">
-<div class="pegs" id="pegs"></div>
-<div class="coin" id="coin">1</div>
-<div class="slots">
-<div class="slot">TAP</div>
-<div class="slot win">2 KR</div>
-<div class="slot">TAP</div>
-<div class="slot win">5 KR</div>
-<div class="slot">TAP</div>
-<div class="slot win">10 KR</div>
-<div class="slot">TAP</div>
-</div>
-</div>
+    <section class="board-area">
+      <canvas id="board" width="700" height="760"></canvas>
+      <div class="board-controls">
+        <label>TRYKK-KRAFT <output id="forceOut">55%</output>
+          <input id="force" type="range" min="10" max="100" value="55">
+        </label>
+        <label>HASTIGHET <output id="speedOut">55%</output>
+          <input id="speed" type="range" min="10" max="100" value="55">
+        </label>
+        <button id="knips">KNIPS!</button>
+      </div>
+    </section>
 
-<div class="controls">
-<div class="control">
-<label for="force">Trykk-kraft: <span id="forceValue">50</span>%</label>
-<input id="force" type="range" min="10" max="100" value="50">
-</div>
-<div class="control">
-<label for="speed">Hastighet: <span id="speedValue">50</span>%</label>
-<input id="speed" type="range" min="10" max="100" value="50">
-</div>
-<button id="play">KNIPS MYNT</button>
-<button id="add">+ 5 KR</button>
-<div id="message">Velg kraft og hastighet.</div>
-</div>
-<div class="small">Gratis demo. Ingen ekte penger.</div>
-</div>
+    <aside class="side right">
+      <div class="clown" aria-hidden="true">🤡</div>
+      <div class="help">VELG HVOR HARDT DU<br>KNIPSER MYNTEN</div>
+      <div class="meter"><span>LAV</span><span>MAKS</span></div>
+      <div class="help">JUSTER SPILLETS<br>HASTIGHET</div>
+      <div class="meter green"><span>LANGSOM</span><span>RASK</span></div>
+      <div class="status" id="status">Sett kraft og hastighet<br>og trykk KNIPS!</div>
+      <div class="icons"><button id="sound">🔊</button><button id="music">♫</button><button id="full">⛶</button></div>
+    </aside>
+  </section>
 
-<script>
-(function(){
-var money=20,busy=false;
-var moneyEl=document.getElementById("money");
-var winEl=document.getElementById("win");
-var msg=document.getElementById("message");
-var coin=document.getElementById("coin");
-var board=document.getElementById("board");
-var force=document.getElementById("force");
-var speed=document.getElementById("speed");
-var play=document.getElementById("play");
-
-for(var r=0;r<7;r++){
-  for(var c=0;c<8;c++){
-    var p=document.createElement("div");
-    p.className="peg";
-    p.style.left=(8+c*11+(r%2?5:0))+"%";
-    p.style.top=(r*45+5)+"px";
-    document.getElementById("pegs").appendChild(p);
-  }
-}
-
-function update(){
-  moneyEl.innerHTML=money;
-  document.getElementById("forceValue").innerHTML=force.value;
-  document.getElementById("speedValue").innerHTML=speed.value;
-  play.disabled=busy || money<1;
-}
-force.oninput=speed.oninput=update;
-
-document.getElementById("add").onclick=function(){
-  money+=5;
-  msg.innerHTML="Du fikk 5 prøvekr.";
-  update();
-};
-
-play.onclick=function(){
-  if(busy||money<1)return;
-  money--;
-  busy=true;
-  winEl.innerHTML="0";
-  msg.innerHTML="Mynten er på vei...";
-  update();
-
-  var x=50;
-  var y=8;
-  var vx=(Number(force.value)-50)/10;
-  var fall=1.2+(Number(speed.value)/100)*2;
-  coin.style.display="block";
-
-  var timer=setInterval(function(){
-    x+=vx;
-    vx*=0.985;
-    y+=fall;
-
-    if(x<4){x=4;vx=Math.abs(vx)*0.7}
-    if(x>96){x=96;vx=-Math.abs(vx)*0.7}
-
-    coin.style.left=x+"%";
-    coin.style.top=y+"%";
-
-    if(y>=78){
-      clearInterval(timer);
-      finish(x);
-    }
-  },25);
-};
-
-function finish(x){
-  var index=Math.floor(x/100*7);
-  if(index<0)index=0;
-  if(index>6)index=6;
-  var values=[0,2,0,5,0,10,0];
-  var value=values[index];
-  money+=value;
-  winEl.innerHTML=value;
-  msg.innerHTML=value>0 ? "Gratulerer! Du vant "+value+" kr." : "TAP – prøv igjen!";
-  coin.style.display="none";
-  busy=false;
-  update();
-}
-
-update();
-})();
-</script>
+  <section class="howto">
+    <h2>★ SLIK SPILLER DU ★</h2>
+    <div class="steps">
+      <div><b>1</b><span>🪙</span><p>Sett inn mynt<br><small>(kun prøvepenger)</small></p></div>
+      <div><b>2</b><span>🎛️</span><p>Velg trykk-kraft<br>og hastighet</p></div>
+      <div><b>3</b><span>👆</span><p>Trykk KNIPS!<br>og send mynten</p></div>
+      <div><b>4</b><span>⭐</span><p>Mynten spretter<br>og lander i en lomme</p></div>
+    </div>
+    <div class="fun">★ VINN OG HA DET GØY! ★</div>
+  </section>
+  <footer>Gratis sirkus-demo · Ingen ekte penger · Klassisk kronespill</footer>
+</main>
+<script src="game.js"></script>
 </body>
 </html>
