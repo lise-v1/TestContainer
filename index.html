@@ -3,48 +3,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Kronespill – klassisk knipsekasse</title>
+  <title>Kronespill – klassisk</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="cabinet">
-    <header>
-      <div>
-        <h1>KRONESPILL</h1>
-        <p>Den klassiske knipsekassa</p>
-      </div>
-      <div class="score">
-        <span>BEHOLDNING</span>
-        <strong id="coins">10</strong> kr
-      </div>
-    </header>
+  <main class="arcade">
+    <div class="marquee">
+      <div class="lamp-row">● ● ● ● ● ● ●</div>
+      <h1>KRONESPILL</h1>
+      <p>KLASSISK KNIPSEKASSE</p>
+    </div>
 
-    <section class="machine">
-      <div class="glass">
-        <div class="slots" id="slots"></div>
-        <div class="coin" id="coin" aria-hidden="true">1</div>
-        <div class="launcher">
-          <label for="power">Knipsestyrke</label>
-          <input id="power" type="range" min="25" max="95" value="58">
-          <button id="shoot">KNIPS MYNT</button>
+    <div class="panel">
+      <div class="topline">
+        <div>PRØVEPENGER: <b id="money">20</b> KR</div>
+        <div id="status">Sett kraft og hastighet – knips!</div>
+      </div>
+
+      <div class="game-wrap">
+        <canvas id="game" width="820" height="720" aria-label="Kronespill"></canvas>
+
+        <div class="hud">
+          <div class="control">
+            <label for="force">TRYKK-KRAFT <output id="forceOut">55</output>%</label>
+            <input id="force" type="range" min="20" max="100" value="55">
+          </div>
+          <div class="control">
+            <label for="speed">HASTIGHET <output id="speedOut">55</output>%</label>
+            <input id="speed" type="range" min="20" max="100" value="55">
+          </div>
+          <button id="shoot">KNIPS KRONEN</button>
+          <button id="add">+ 5 KR</button>
         </div>
       </div>
-      <div class="tray">
-        <span>UTBETALING</span>
-        <strong id="message">Velg styrke og knips mynten.</strong>
-        <div id="payout" class="payout"></div>
+
+      <div class="payout">
+        <span>GEVINST</span>
+        <strong id="win">—</strong>
+        <small>Treff en gevinstlomme nederst.</small>
       </div>
-    </section>
+    </div>
 
-    <section class="controls">
-      <button id="add">+ 5 prøvekr</button>
-      <button id="reset">Start på nytt</button>
-      <span>Gratis demo – ingen ekte penger.</span>
-    </section>
-
-    <footer>
-      Klassisk inspirert kronespill. Treff en gevinstluke med presisjon og litt flaks.
-    </footer>
+    <footer>Gratis spilldemo · Ingen ekte penger · Klassisk stil</footer>
   </main>
   <script src="game.js"></script>
 </body>

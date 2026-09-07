@@ -1,15 +1,14 @@
-# Kronespill
+# Kronespill – klassisk versjon
 
-En liten, gratis nettleserversjon inspirert av den klassiske norske knipsekassa/kronespillet.
+En spillbar nettleserversjon av et klassisk norsk kronespill/knipsekasse.
 
-## Spille
+### Funksjoner
+- Klassisk arcade-/knipsekasse-stil
+- Mynt som spretter mellom pinner
+- **Trykk-kraft** styrer hvor kraftig mynten skytes
+- **Hastighet** styrer energien og farten i spillet
+- Gevinstlommer på 2, 5 og 10 kr
+- Gratis demo – ingen ekte penger
 
-Åpne `index.html` i en nettleser. Velg knipsestyrke og trykk **KNIPS MYNT**.
-
-Dette er en demo uten ekte penger, betaling eller pengeuttak.
-
-## Legge inn på GitHub
-
-Last opp `index.html`, `style.css`, `game.js` og `README.md` til repositoryet ditt.
-
-For GitHub Pages kan `index.html` brukes som inngangsside.
+## Kjøring
+Åpne `index.html` lokalt, eller publiser repoet med GitHub Pages.
