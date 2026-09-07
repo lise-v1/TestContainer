@@ -2,68 +2,70 @@
 <html lang="no">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kronespill – Sirkus</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="lights"></div>
-<main class="cabinet">
+<main class="machine">
   <header class="marquee">
-    <div class="tent"></div>
-    <div class="bulbs">★ · ★ · ★ · ★ · ★ · ★ · ★</div>
+    <div class="bulbs">★ ★ ★ ★ ★ ★ ★ ★ ★</div>
     <h1>KRONESPILL</h1>
-    <div class="subtitle">✦ KAST MYNTEN OG VINN! ✦</div>
+    <div class="ribbon">KAST MYNTEN OG VINN!</div>
   </header>
 
-  <section class="content">
-    <aside class="side left">
-      <div class="display-card"><span>SALDO</span><b id="balance">100</b><em>KR</em></div>
-      <div class="display-card"><span>SISTE GEVINST</span><b id="lastWin">0</b><em>KR</em></div>
-      <div class="display-card"><span>BESTE GEVINST</span><b id="bestWin">10</b><em>KR</em></div>
-      <button class="coinbox" id="addCoin">
-        <span class="coin-icon">1</span>
-        <strong>MYNT INNKAST</strong>
-        <small>+ 5 prøvekr</small>
-      </button>
-      <div class="luck">LYKKE TIL!<small>★ ★ ★</small></div>
+  <div class="layout">
+    <aside class="panel left">
+      <div class="score"><span>SALDO</span><strong id="money">100</strong><small>KR</small></div>
+      <div class="score red"><span>SISTE GEVINST</span><strong id="win">0</strong><small>KR</small></div>
+      <div class="score blue"><span>BESTE GEVINST</span><strong id="best">10</strong><small>KR</small></div>
+      <button id="add" class="coinButton">🪙<b>MYNT INNKAST</b><small>+ 5 PRØVEKR</small></button>
+      <div class="luck">LYKKE TIL!<br><span>★ ★ ★ ★</span></div>
     </aside>
 
-    <section class="board-area">
-      <canvas id="board" width="700" height="760"></canvas>
-      <div class="board-controls">
-        <label>TRYKK-KRAFT <output id="forceOut">55%</output>
-          <input id="force" type="range" min="10" max="100" value="55">
-        </label>
-        <label>HASTIGHET <output id="speedOut">55%</output>
-          <input id="speed" type="range" min="10" max="100" value="55">
-        </label>
-        <button id="knips">KNIPS!</button>
+    <section class="game">
+      <div class="board" id="board">
+        <div class="title">✦ KNIPS ✦</div>
+        <div id="pegs"></div>
+        <div id="coin">1</div>
+        <div class="slots">
+          <div>TAP</div><div class="yellow">2<br><small>KR</small></div>
+          <div class="redslot">5<br><small>KR</small></div><div class="green">10<br><small>KR</small></div>
+          <div class="redslot">5<br><small>KR</small></div><div class="yellow">2<br><small>KR</small></div><div>TAP</div>
+        </div>
       </div>
+
+      <div class="controls">
+        <div class="slider">
+          <label>TRYKK-KRAFT <output id="forceValue">50%</output></label>
+          <input id="force" type="range" min="10" max="100" value="50">
+          <small>LETT <span>STERK</span></small>
+        </div>
+        <div class="slider">
+          <label>HASTIGHET <output id="speedValue">50%</output></label>
+          <input id="speed" type="range" min="10" max="100" value="50">
+          <small>LANGSOM <span>RASK</span></small>
+        </div>
+        <button id="play" class="knips">KNIPS!</button>
+      </div>
+      <div id="message" class="message">Velg kraft og hastighet</div>
     </section>
 
-    <aside class="side right">
-      <div class="clown" aria-hidden="true">🤡</div>
-      <div class="help">VELG HVOR HARDT DU<br>KNIPSER MYNTEN</div>
-      <div class="meter"><span>LAV</span><span>MAKS</span></div>
-      <div class="help">JUSTER SPILLETS<br>HASTIGHET</div>
-      <div class="meter green"><span>LANGSOM</span><span>RASK</span></div>
-      <div class="status" id="status">Sett kraft og hastighet<br>og trykk KNIPS!</div>
-      <div class="icons"><button id="sound">🔊</button><button id="music">♫</button><button id="full">⛶</button></div>
+    <aside class="panel right">
+      <div class="clown">🤡</div>
+      <div class="clownText">HEI!<br>KLAR FOR<br>EN RUNDE?</div>
+      <div class="tip">JUSTÉR INNSTILLINGENE<br>OG TRYKK KNIPS!</div>
     </aside>
-  </section>
+  </div>
 
   <section class="howto">
     <h2>★ SLIK SPILLER DU ★</h2>
-    <div class="steps">
-      <div><b>1</b><span>🪙</span><p>Sett inn mynt<br><small>(kun prøvepenger)</small></p></div>
-      <div><b>2</b><span>🎛️</span><p>Velg trykk-kraft<br>og hastighet</p></div>
-      <div><b>3</b><span>👆</span><p>Trykk KNIPS!<br>og send mynten</p></div>
-      <div><b>4</b><span>⭐</span><p>Mynten spretter<br>og lander i en lomme</p></div>
-    </div>
-    <div class="fun">★ VINN OG HA DET GØY! ★</div>
+    <div><b>1</b> 🪙 Sett inn prøvepenger</div>
+    <div><b>2</b> 🎛️ Juster kraft og hastighet</div>
+    <div><b>3</b> 👆 Trykk KNIPS!</div>
+    <div><b>4</b> ⭐ Se hvor mynten lander</div>
   </section>
-  <footer>Gratis sirkus-demo · Ingen ekte penger · Klassisk kronespill</footer>
+  <footer>Gratis spilldemo · Ingen ekte penger</footer>
 </main>
 <script src="game.js"></script>
 </body>

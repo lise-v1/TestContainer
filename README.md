@@ -1,17 +1,11 @@
-# Kronespill – Sirkus
+# Kronespill – ren sirkusversjon
 
-En fargerik klassisk kronespill-demo med sirkus-/karnevaltema.
+En enkel klientvennlig HTML/CSS/JavaScript-versjon.
 
-## Funksjoner
-- Sirkusfarger, telt, lys og stjerner
-- Mynt som spretter mellom pinner
-- Justerbar **trykk-kraft**
-- Justerbar **hastighet**
-- Gevinstlommer: 2, 5 og 10 kr
-- Saldo, siste gevinst og beste gevinst
-- Fullskjerm, lyd/musikk-knapper (visuell demo)
-- Mobiltilpasset
-- Ingen ekte penger
-
-## Publisering
-Åpne `index.html` lokalt, eller bruk GitHub Pages.
+- Ingen eksterne biblioteker
+- Ingen bilder eller CDN
+- Ingen installasjon
+- Kan åpnes direkte i Chrome/Edge
+- Justerbar trykk-kraft og hastighet
+- Sirkustema med klare farger og klovn
+- Kun prøvepenger
