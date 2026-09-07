@@ -1,51 +1,70 @@
 <!doctype html>
 <html lang="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Kronespill – klassisk</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kronespill – Sirkus</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="arcade">
-    <div class="marquee">
-      <div class="lamp-row">● ● ● ● ● ● ●</div>
-      <h1>KRONESPILL</h1>
-      <p>KLASSISK KNIPSEKASSE</p>
+<div class="lights"></div>
+<main class="cabinet">
+  <header class="marquee">
+    <div class="tent"></div>
+    <div class="bulbs">★ · ★ · ★ · ★ · ★ · ★ · ★</div>
+    <h1>KRONESPILL</h1>
+    <div class="subtitle">✦ KAST MYNTEN OG VINN! ✦</div>
+  </header>
+
+  <section class="content">
+    <aside class="side left">
+      <div class="display-card"><span>SALDO</span><b id="balance">100</b><em>KR</em></div>
+      <div class="display-card"><span>SISTE GEVINST</span><b id="lastWin">0</b><em>KR</em></div>
+      <div class="display-card"><span>BESTE GEVINST</span><b id="bestWin">10</b><em>KR</em></div>
+      <button class="coinbox" id="addCoin">
+        <span class="coin-icon">1</span>
+        <strong>MYNT INNKAST</strong>
+        <small>+ 5 prøvekr</small>
+      </button>
+      <div class="luck">LYKKE TIL!<small>★ ★ ★</small></div>
+    </aside>
+
+    <section class="board-area">
+      <canvas id="board" width="700" height="760"></canvas>
+      <div class="board-controls">
+        <label>TRYKK-KRAFT <output id="forceOut">55%</output>
+          <input id="force" type="range" min="10" max="100" value="55">
+        </label>
+        <label>HASTIGHET <output id="speedOut">55%</output>
+          <input id="speed" type="range" min="10" max="100" value="55">
+        </label>
+        <button id="knips">KNIPS!</button>
+      </div>
+    </section>
+
+    <aside class="side right">
+      <div class="clown" aria-hidden="true">🤡</div>
+      <div class="help">VELG HVOR HARDT DU<br>KNIPSER MYNTEN</div>
+      <div class="meter"><span>LAV</span><span>MAKS</span></div>
+      <div class="help">JUSTER SPILLETS<br>HASTIGHET</div>
+      <div class="meter green"><span>LANGSOM</span><span>RASK</span></div>
+      <div class="status" id="status">Sett kraft og hastighet<br>og trykk KNIPS!</div>
+      <div class="icons"><button id="sound">🔊</button><button id="music">♫</button><button id="full">⛶</button></div>
+    </aside>
+  </section>
+
+  <section class="howto">
+    <h2>★ SLIK SPILLER DU ★</h2>
+    <div class="steps">
+      <div><b>1</b><span>🪙</span><p>Sett inn mynt<br><small>(kun prøvepenger)</small></p></div>
+      <div><b>2</b><span>🎛️</span><p>Velg trykk-kraft<br>og hastighet</p></div>
+      <div><b>3</b><span>👆</span><p>Trykk KNIPS!<br>og send mynten</p></div>
+      <div><b>4</b><span>⭐</span><p>Mynten spretter<br>og lander i en lomme</p></div>
     </div>
-
-    <div class="panel">
-      <div class="topline">
-        <div>PRØVEPENGER: <b id="money">20</b> KR</div>
-        <div id="status">Sett kraft og hastighet – knips!</div>
-      </div>
-
-      <div class="game-wrap">
-        <canvas id="game" width="820" height="720" aria-label="Kronespill"></canvas>
-
-        <div class="hud">
-          <div class="control">
-            <label for="force">TRYKK-KRAFT <output id="forceOut">55</output>%</label>
-            <input id="force" type="range" min="20" max="100" value="55">
-          </div>
-          <div class="control">
-            <label for="speed">HASTIGHET <output id="speedOut">55</output>%</label>
-            <input id="speed" type="range" min="20" max="100" value="55">
-          </div>
-          <button id="shoot">KNIPS KRONEN</button>
-          <button id="add">+ 5 KR</button>
-        </div>
-      </div>
-
-      <div class="payout">
-        <span>GEVINST</span>
-        <strong id="win">—</strong>
-        <small>Treff en gevinstlomme nederst.</small>
-      </div>
-    </div>
-
-    <footer>Gratis spilldemo · Ingen ekte penger · Klassisk stil</footer>
-  </main>
-  <script src="game.js"></script>
+    <div class="fun">★ VINN OG HA DET GØY! ★</div>
+  </section>
+  <footer>Gratis sirkus-demo · Ingen ekte penger · Klassisk kronespill</footer>
+</main>
+<script src="game.js"></script>
 </body>
 </html>
