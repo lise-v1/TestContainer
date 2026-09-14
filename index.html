@@ -277,12 +277,33 @@
       margin: 0 0 18px;
     }
 
+    /* Brukes av de to driftspanel-prototypene */
+    .prototype-note {
+      color: var(--muted);
+      font-size: 12px !important;
+      font-style: italic;
+      margin-top: -6px !important;
+      margin-bottom: 12px !important;
+    }
+
+    .project-card .project-open {
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: auto;
+      margin-bottom: 12px;
+    }
+
     .project-card .status {
       margin-top: auto;
       align-self: flex-start;
       background: var(--surface-soft);
       padding: 5px 10px;
       border-radius: 20px;
+    }
+
+    .project-card .project-open + .status {
+      margin-top: 0;
     }
 
     .mission {
@@ -439,6 +460,12 @@
       border-top: 1px solid var(--line);
     }
 
+    @media (max-width: 1100px) {
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 820px) {
       .featured,
       .about {
@@ -571,6 +598,35 @@
         <h3>Arkivprosjekt 03</h3>
         <p>Et fremtidig prosjekt knyttet til bevaring, kvalitet og kontroll.</p>
         <span class="status">Idé</span>
+      </article>
+
+      <!-- NYTT: DRIFTSPANEL FOR ARKIVAR -->
+      <article class="card project-card">
+        <div class="small-icon">◉</div>
+        <h3>Arkivar Driftspanel</h3>
+        <p>
+          Prototype for samlet oversikt over arkivtjenester og eFormidling.
+        </p>
+        <p class="prototype-note">
+          Dummydata – kun for demonstrasjon.
+        </p>
+        <a class="project-open" href="arkivar-driftspanel/">Åpne prototypen →</a>
+        <span class="status">Planlegging</span>
+      </article>
+
+      <!-- NYTT: DRIFTSPANEL FOR FORVALTER -->
+      <article class="card project-card">
+        <div class="small-icon">◌</div>
+        <h3>Forvalter Driftspanel</h3>
+        <p>
+          Prototype for oversikt over kontaktpunkter, ansvar og feilhåndtering
+          for arkiv- og meldingstjenester.
+        </p>
+        <p class="prototype-note">
+          Dummydata – kun for demonstrasjon.
+        </p>
+        <a class="project-open" href="forvalter-driftspanel/">Åpne prototypen →</a>
+        <span class="status">Planlegging</span>
       </article>
     </div>
   </section>
