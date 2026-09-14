@@ -1,186 +1,108 @@
-<div align="center">
-
-<img src="assets/project-hub-preview.png" alt="Project Hub – Arkiv. Innsikt. Fremtid." width="900">
-
-<br><br>
-
 # PROJECT HUB
 
-### Arkiv. Innsikt. Fremtid.
+**Arkiv. Innsikt. Fremtid.**
 
-**En profesjonell inngangsportal for digitale prosjekter, idéer og løsninger innen arkivsektoren.**
-
-<br>
-
-<a href="#prosjekter">Utforsk prosjekter</a>
-&nbsp;&nbsp;·&nbsp;&nbsp;
-<a href="#kommende-prosjekter">Kommende prosjekter</a>
-&nbsp;&nbsp;·&nbsp;&nbsp;
-<a href="#om-project-hub">Om Project Hub</a>
-
-</div>
+En profesjonell inngangsportal for digitale prosjekter, idéer og løsninger innen arkivsektoren.
 
 ---
 
-## Prosjekter
+## 🌿 Project Hub
 
-<table>
-<tr>
-<td width="18%" align="center">
-
-### ▤
-
-</td>
-<td width="52%">
+Project Hub samler prosjekter, eksperimenter og kommende løsninger på ett sted.
 
 ### Første prosjekt kommer
 
-Project Hub er under etablering. Første prosjekt publiseres her når det er klart for testing og demonstrasjon.
+**Status:** PLANLEGGING
 
-**Status:** `PLANLEGGING`
+Et prosjektområde for digitale løsninger med fokus på:
 
-`Arkiv` `Metadata` `Søk & Innsyn` `Åpne standarder`
-
-</td>
-<td width="30%">
-
-**Fokus**
-
-- Struktur
-- Tilgjengelighet
-- Kvalitet
-- Videreutvikling
-
-</td>
-</tr>
-</table>
+- Arkiv
+- Metadata
+- Søk og innsyn
+- Åpne standarder
 
 ---
 
 ## Kommende prosjekter
 
-<table>
-<tr>
-<td width="33%" valign="top">
-
-### Arkivprosjekt 01
-
-Et kommende prosjekt innen digital arkivforvaltning og tilgjengeliggjøring.
-
-**● PLANLEGGING**
-
-</td>
-<td width="33%" valign="top">
-
-### Arkivprosjekt 02
-
-Et konsept med fokus på søk, struktur og bedre tilgang til informasjon.
-
-**● IDÉ**
-
-</td>
-<td width="33%" valign="top">
-
-### Arkivprosjekt 03
-
-Et fremtidig prosjekt knyttet til bevaring, kvalitet og kontroll.
-
-**● IDÉ**
-
-</td>
-</tr>
-</table>
+| Prosjekt | Status |
+|---|---|
+| Arkivprosjekt 01 | Planlegging |
+| Arkivprosjekt 02 | Idé |
+| Arkivprosjekt 03 | På sikt |
 
 ---
 
 ## For arkivsektoren
 
-<table>
-<tr>
-<td width="33%" valign="top">
+**Kvalitet**  
+Løsninger utviklet med struktur, sporbarhet og kvalitet i fokus.
 
-### ⌂ For arkivsektoren
+**Innsikt**  
+Teknologi skal gjøre informasjon enklere å finne, forstå og bruke.
 
-Løsninger utviklet med forståelse for behov, arbeidsprosesser og praksis.
-
-</td>
-<td width="33%" valign="top">
-
-### ◎ Med fokus på kvalitet
-
-Struktur, dokumentasjon og standarder er en naturlig del av utviklingsarbeidet.
-
-</td>
-<td width="33%" valign="top">
-
-### ◌ For fremtiden
-
-Teknologi som gjør verdifull informasjon mer tilgjengelig og anvendelig.
-
-</td>
-</tr>
-</table>
+**Fremtid**  
+Åpne, fleksible og vedlikeholdbare løsninger for digitale arkiv.
 
 ---
 
-## Teknologier · Roadmap · Status
+## Teknologi
 
-<table>
-<tr>
-<td width="33%" valign="top">
+- HTML5
+- CSS3
+- Responsivt design
+- GitHub Pages
+- Åpne standarder
 
-### Teknologier
+---
 
-`HTML`  
-`CSS`  
-`JavaScript`  
-`TypeScript`  
-`GitHub`  
-`OpenAPI`  
-`Åpne standarder`
+## Filer
 
-</td>
-<td width="34%" valign="top">
+Prosjektet er bygget uten eksterne rammeverk eller biblioteker.
 
-### Roadmap 2026
+```text
+TestContainer/
+├── index.html
+├── style.css
+└── README.md
+```
 
-- ✓ Project Hub
-- ✓ Visuell profil
-- ○ Første prosjekt
-- ○ Interaktiv demo
-- ○ Flere prosjektområder
+`index.html` er selve nettsiden.
 
-</td>
-<td width="33%" valign="top">
+`style.css` inneholder designet og lastes inn av `index.html` med:
 
-### Prosjektstatus
+```html
+<link rel="stylesheet" href="style.css">
+```
 
-**Planlegging** ████████████████ 80%
+### Åpne nettsiden
 
-**Utvikling** ███████░░░░░░░░░ 35%
+Hvis repositoryet publiseres med GitHub Pages, er det **`index.html` + `style.css`** som gjengir den ferdige portalen.
 
-**Testing** ██░░░░░░░░░░░░░░░ 10%
+> Merk: GitHub viser `README.md` som dokumentasjon. GitHub kjører ikke en egen CSS-fil som styling av selve README-visningen. Det ferdige designet vises når `index.html` kjøres som nettside, for eksempel via GitHub Pages.
 
-**Lansering** ░░░░░░░░░░░░░░░ 0%
+---
 
-</td>
-</tr>
-</table>
+## Roadmap
+
+**01 — Struktur**  
+Portal og prosjektstruktur.
+
+**02 — Første prosjekt**  
+Utvikling av første digitale løsning.
+
+**03 — Flere prosjekter**  
+Nye konsepter og eksperimenter.
+
+**04 — Publisering**  
+Tilgjengeliggjøring av ferdige løsninger.
 
 ---
 
 ## Om Project Hub
 
-Project Hub fungerer som en samlet inngangsportal til nye prosjekter, prototyper og digitale eksperimenter.
+Project Hub er en enkel og profesjonell plattform for å samle digitale prosjekter og idéer knyttet til arkiv, informasjon og teknologi.
 
-Målet er å utvikle løsninger som er **enkle å forstå, praktiske å bruke og mulige å videreutvikle over tid**.
+---
 
-<div align="center">
-
-**Idéer → prototyper → testing → ferdige løsninger**
-
-<br>
-
-© 2026 Lise V1 · Arkiv. Innsikt. Fremtid.
-
-</div>
+*Project Hub · Arkiv. Innsikt. Fremtid.*
