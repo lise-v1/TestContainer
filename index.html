@@ -1,172 +1,689 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kronespill – Sirkus</title>
-<style>
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Arial,sans-serif}
-body{background:#06234b;color:#fff;padding:8px}
-.machine{width:min(1200px,100%);margin:auto;background:#092956;border:7px solid #f5c33d;border-radius:20px;overflow:hidden;box-shadow:0 12px 35px #000}
-.marquee{position:relative;text-align:center;background:linear-gradient(#e52b1d,#a20d17);padding:10px 15px 18px;border-bottom:5px solid #ffd447}
-.marquee:before{content:"";position:absolute;left:0;right:0;top:0;height:48px;background:repeating-linear-gradient(90deg,#fff 0 42px,#e3261b 42px 84px);opacity:.9;clip-path:polygon(0 0,100% 0,86% 100%,14% 100%)}
-.lights{position:relative;color:#ffe35b;font-size:17px;letter-spacing:14px;text-shadow:0 0 10px #fff000}
-h1{position:relative;margin:2px 0;color:#ffe65c;font:900 clamp(42px,7vw,82px) Georgia,serif;letter-spacing:5px;text-shadow:5px 5px #9c1714,0 0 10px #ffdc37}
-.ribbon{position:relative;display:inline-block;background:#d92619;border:3px solid #f8c33b;padding:8px 30px;border-radius:7px;font:bold 18px Georgia;box-shadow:0 4px 0 #8c1714}
-.layout{display:grid;grid-template-columns:190px minmax(450px,1fr) 210px;gap:10px;padding:12px;background:#0b3b70}
-.panel{display:flex;flex-direction:column;gap:10px}
-.card{background:#06162e;border:4px solid #f3bf31;border-radius:10px;padding:8px;text-align:center;box-shadow:inset 0 0 12px #000}
-.card.red{border-color:#ef4430}.card.blue{border-color:#39a9ed}
-.card .label{font-weight:bold;font-size:13px;color:#fff}.card .value{font-size:36px;font-weight:900;color:#ffe03c}.card small{font-weight:bold;color:#ffe03c}
-.coinbox{background:#101820;border:4px solid #f2bd31;border-radius:12px;min-height:170px;text-align:center;padding:8px;color:#fff}
-.coinbox h3{margin:0 -2px 8px;background:#d5261b;padding:8px;border-radius:5px;font:700 20px Georgia}
-.coin{width:65px;height:65px;margin:12px auto;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff3aa,#d9a52c 55%,#71470a);border:4px solid #70450b;color:#70450b;font:bold 28px Georgia;display:grid;place-items:center}
-.coinbox button{background:#e52a1e;color:white;border:0;border-radius:7px;padding:8px 13px;font-weight:bold;cursor:pointer}
-.luck{margin-top:auto;background:#d6291d;border:3px solid #f6c53a;border-radius:9px;padding:12px;text-align:center;font:bold 25px Georgia;color:#ffe052}
-.luck small{display:block;font-size:13px;margin-top:5px}
-.game{min-width:0}
-.board{height:670px;position:relative;overflow:hidden;border:7px solid #e1a82d;border-radius:18px;background:#f6d778;box-shadow:inset 0 0 30px #8b5818}
-.board:before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 270deg at 50% 58%,rgba(255,255,255,.22) 0 9deg,rgba(206,151,35,.08) 9deg 18deg)}
-.chute{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:3;color:#d5251c;font-size:38px;font-weight:900;line-height:28px;text-align:center}
-#pegs{position:absolute;left:7%;right:7%;top:82px;height:425px}
-.peg{position:absolute;width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#4d5457 35%,#111 70%);box-shadow:1px 2px 3px #674615}
-#coinGame{display:none;position:absolute;z-index:8;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff5a7,#dca82d 55%,#75480a);border:3px solid #70450a;color:#6a420b;text-align:center;line-height:28px;font-weight:bold}
-.slots{position:absolute;bottom:0;left:0;right:0;height:125px;display:flex;z-index:5;padding:0 3px}
-.slot{flex:1;margin:0 2px;border:3px solid #18222a;background:#11477d;color:white;display:grid;place-items:center;text-align:center;font-size:23px;font-weight:900;box-shadow:inset 0 0 10px #000}
-.slot.yellow{background:#f2c21d;color:#161616}.slot.red{background:#db2c22}.slot.green{background:#2ba82a}
-.slot small{font-size:13px}
-.controls{display:grid;grid-template-columns:1fr 1fr 145px;gap:9px;margin-top:9px;background:#06172f;border:3px solid #dca72d;border-radius:10px;padding:10px}
-.control label{display:block;font-size:12px;font-weight:bold}.control output{float:right;color:#ffdf4e}
-.control input{width:100%;accent-color:#f6bd28}.scale{display:flex;justify-content:space-between;font-size:9px;color:#b9cbe0}
-.knips{background:#36aa28;border:4px solid #a9e847;border-radius:12px;color:white;font:bold 28px Georgia;cursor:pointer;text-shadow:2px 2px #12600e}
-.knips:disabled{background:#777;border-color:#aaa}
-.message{text-align:center;min-height:28px;padding:6px;color:#ffe25b;font-weight:bold}
-.clown{background:#e3291d;border:4px solid #ffd03d;border-radius:50%;height:190px;display:grid;place-items:center;font-size:100px;box-shadow:inset 0 0 18px #7f1012}
-.clownText{text-align:center;color:#ffe15a;font:bold 21px Georgia;line-height:1.1}
-.tip{margin-top:auto;background:#06172f;border:3px solid #e2aa2f;border-radius:9px;padding:12px;text-align:center;font-weight:bold;font-size:12px;color:#fff}
-.icons{display:flex;justify-content:center;gap:10px}.icons button{width:48px;height:48px;border-radius:50%;border:3px solid #f2bd31;background:#164b7d;color:#fff;font-size:20px;cursor:pointer}
-.instructions{background:#071a33;border-top:4px solid #dca72d;padding:12px;text-align:center}
-.instructions h2{margin:0 0 10px;color:#ffd33e;font:700 21px Georgia}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.step{font-size:12px;font-weight:bold}.step b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#1761a0;font-size:17px;margin-right:5px}
-footer{text-align:center;background:#030d1c;color:#8096b1;padding:8px;font-size:10px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Project Hub – digitale prosjekter, idéer og eksperimenter for arkivsektoren.">
+  <title>Project Hub | Arkiv. Innsikt. Fremtid.</title>
 
-@media(max-width:900px){.layout{grid-template-columns:1fr}.panel.left{display:grid;grid-template-columns:repeat(3,1fr)}.coinbox,.luck{margin-top:0}.panel.right{display:none}.board{height:600px}.controls{grid-template-columns:1fr 1fr}.knips{grid-column:1/-1}}
-@media(max-width:520px){body{padding:3px}.machine{border-width:4px}.layout{padding:6px}.panel.left{grid-template-columns:1fr 1fr}.card.blue{grid-column:1/-1}.board{height:500px}.steps{grid-template-columns:1fr 1fr}h1{letter-spacing:1px}.ribbon{font-size:14px;padding:6px 15px}}
-</style>
+  <style>
+    :root {
+      --bg: #f5f6f2;
+      --surface: #ffffff;
+      --surface-soft: #f0f3ed;
+      --text: #18201b;
+      --muted: #657067;
+      --line: #dfe5df;
+      --green: #52705a;
+      --green-dark: #385440;
+      --green-soft: #e4ece3;
+      --accent: #718873;
+      --shadow: 0 10px 35px rgba(30, 45, 34, .07);
+      --radius: 14px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 72px 20px 58px;
+      background:
+        linear-gradient(180deg, #fafbf8 0%, #f5f6f2 100%);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mark {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 20px;
+      border: 2px solid var(--green);
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      font-size: 24px;
+      position: relative;
+    }
+
+    .mark::before,
+    .mark::after {
+      content: "";
+      position: absolute;
+      border: 2px solid var(--green);
+      border-radius: 5px;
+      width: 28px;
+      height: 8px;
+      left: 11px;
+    }
+
+    .mark::before { top: 11px; }
+    .mark::after { bottom: 11px; }
+
+    .eyebrow {
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1.05;
+      letter-spacing: -.045em;
+      font-weight: 650;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 22px auto 30px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 190px;
+      padding: 13px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--green);
+      font-size: 14px;
+      font-weight: 650;
+      transition: .2s ease;
+    }
+
+    .btn.primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--green-dark);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 18px rgba(50, 75, 56, .12);
+    }
+
+    main {
+      padding: 42px 0 70px;
+    }
+
+    section {
+      margin-bottom: 34px;
+    }
+
+    .section-title {
+      margin: 0 0 15px;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      font-weight: 750;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .featured {
+      padding: 34px;
+      display: grid;
+      grid-template-columns: 150px 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .project-icon {
+      width: 150px;
+      height: 150px;
+      border-radius: 12px;
+      background: var(--green-soft);
+      display: grid;
+      place-items: center;
+      color: var(--green-dark);
+      font-size: 48px;
+      border: 1px solid #d4dfd2;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    h2 {
+      margin: 7px 0 8px;
+      font-size: 30px;
+      letter-spacing: -.025em;
+    }
+
+    .featured p {
+      color: var(--muted);
+      max-width: 590px;
+      margin: 0 0 18px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tag {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      color: #536057;
+      border-radius: 6px;
+      padding: 5px 9px;
+      font-size: 12px;
+    }
+
+    .project-link {
+      color: var(--green-dark);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .project-link::after {
+      content: "  →";
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .project-card {
+      padding: 25px;
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .small-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 9px;
+      background: var(--green-soft);
+      display: grid;
+      place-items: center;
+      color: var(--green-dark);
+      font-size: 20px;
+      margin-bottom: 18px;
+    }
+
+    .project-card h3 {
+      margin: 0 0 7px;
+      font-size: 19px;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 18px;
+    }
+
+    .project-card .status {
+      margin-top: auto;
+      align-self: flex-start;
+      background: var(--surface-soft);
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+
+    .mission {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #fafbf8;
+    }
+
+    .mission-item {
+      padding: 28px;
+      border-right: 1px solid var(--line);
+    }
+
+    .mission-item:last-child { border-right: 0; }
+
+    .mission-icon {
+      color: var(--green);
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .mission h3 {
+      margin: 0 0 7px;
+      font-size: 17px;
+    }
+
+    .mission p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .info-card {
+      padding: 25px;
+    }
+
+    .info-card h3 {
+      margin: 0 0 18px;
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+    }
+
+    .tech-list,
+    .roadmap {
+      display: grid;
+      gap: 9px;
+    }
+
+    .tech,
+    .road {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .road .check {
+      width: 18px;
+      height: 18px;
+      border: 1px solid #b8c5b9;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      font-size: 11px;
+      flex: 0 0 auto;
+    }
+
+    .progress {
+      display: grid;
+      gap: 15px;
+    }
+
+    .progress-row {
+      display: grid;
+      grid-template-columns: 78px 1fr 35px;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .bar {
+      height: 6px;
+      background: #e5e9e4;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: var(--green);
+      border-radius: inherit;
+    }
+
+    .about {
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap: 45px;
+    }
+
+    .about h2 {
+      font-size: 25px;
+    }
+
+    .about p {
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .contact {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .contact a {
+      width: 43px;
+      height: 43px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: var(--green-dark);
+      background: white;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 20px 35px;
+      color: #7a837c;
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 820px) {
+      .featured,
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .project-icon {
+        width: 90px;
+        height: 90px;
+        font-size: 30px;
+      }
+
+      .grid-3,
+      .info-grid,
+      .mission {
+        grid-template-columns: 1fr;
+      }
+
+      .mission-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .mission-item:last-child {
+        border-bottom: 0;
+      }
+
+      .featured {
+        gap: 18px;
+        padding: 25px;
+      }
+
+      header {
+        padding-top: 50px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(calc(100% - 24px), var(--max));
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .progress-row {
+        grid-template-columns: 70px 1fr 30px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="machine">
-<header class="marquee">
-<div class="lights">★ · ★ · ★ · ★ · ★ · ★ · ★</div>
-<h1>KRONESPILL</h1>
-<div class="ribbon">★ KAST MYNTEN OG VINN! ★</div>
+
+<header>
+  <div class="mark" aria-hidden="true">▤</div>
+  <div class="eyebrow">Project Hub</div>
+  <h1>Arkiv. Innsikt. Fremtid.</h1>
+  <p class="hero-copy">
+    Utforsker og utvikler digitale løsninger som kan styrke arkivsektoren
+    gjennom struktur, tilgjengelighet og god brukeropplevelse.
+  </p>
+
+  <div class="actions">
+    <a class="btn primary" href="#prosjekter">Utforsk prosjekter</a>
+    <a class="btn secondary" href="#kommende">Kommende prosjekter</a>
+    <a class="btn secondary" href="#eksperimenter">Eksperimenter</a>
+  </div>
 </header>
 
-<div class="layout">
-<aside class="panel left">
-<div class="card"><div class="label">★ SALDO ★</div><div class="value" id="money">100</div><small>KR</small></div>
-<div class="card red"><div class="label">★ SISTE GEVINST ★</div><div class="value" id="win">0</div><small>KR</small></div>
-<div class="card blue"><div class="label">★ BESTE GEVINST ★</div><div class="value" id="best">10</div><small>KR</small></div>
-<div class="coinbox">
-<h3>MYNT INNKAST</h3>
-<div class="coin">1</div>
-<button id="add">+ 5 PRØVEKR</button>
-</div>
-<div class="luck">LYKKE TIL!<small>★ ★ ★ ★</small></div>
-</aside>
+<main class="container">
 
-<section class="game">
-<div class="board" id="board">
-<div class="chute">⌄<br>⌄<br>⌄</div>
-<div id="pegs"></div>
-<div id="coinGame">1</div>
-<div class="slots">
-<div class="slot">TAP<br>☹</div>
-<div class="slot yellow">2<br><small>KR</small></div>
-<div class="slot red">5<br><small>KR</small></div>
-<div class="slot green">10<br><small>KR</small></div>
-<div class="slot red">5<br><small>KR</small></div>
-<div class="slot yellow">2<br><small>KR</small></div>
-<div class="slot">TAP<br>☹</div>
-</div>
-</div>
-<div class="controls">
-<div class="control"><label>TRYKK-KRAFT <output id="forceOut">50%</output></label><input id="force" type="range" min="10" max="100" value="50"><div class="scale"><span>LETT</span><span>STERK</span></div></div>
-<div class="control"><label>HASTIGHET <output id="speedOut">50%</output></label><input id="speed" type="range" min="10" max="100" value="50"><div class="scale"><span>LANGSOM</span><span>RASK</span></div></div>
-<button class="knips" id="play">★ KNIPS! ★</button>
-</div>
-<div class="message" id="message">Velg kraft og hastighet</div>
-</section>
+  <section id="prosjekter">
+    <div class="section-title">Featured project</div>
 
-<aside class="panel right">
-<div class="clown">🤡</div>
-<div class="clownText">HEI!<br>KLAR FOR<br>EN RUNDE?</div>
-<div class="tip">JUSTER KRAFT<br>OG HASTIGHET<br>OG TRYKK KNIPS!</div>
-<div class="icons"><button id="sound">🔊</button><button>♫</button></div>
-</aside>
-</div>
+    <div class="card featured">
+      <div class="project-icon" aria-hidden="true">▤</div>
 
-<section class="instructions">
-<h2>★ SLIK SPILLER DU ★</h2>
-<div class="steps">
-<div class="step"><b>1</b> 🪙 Sett inn mynt<br>(prøvepenger)</div>
-<div class="step"><b>2</b> 🎛️ Juster trykk-kraft<br>og hastighet</div>
-<div class="step"><b>3</b> 🔴 Trykk KNIPS!<br>og mynten slippes</div>
-<div class="step"><b>4</b> ⭐ Mynten lander<br>i en lomme</div>
-</div>
-</section>
-<footer>Gratis spilldemo · Ingen ekte penger</footer>
-</div>
+      <div>
+        <span class="status">Planlegging</span>
+        <h2>Første prosjekt kommer</h2>
+        <p>
+          Project Hub er under etablering. Det første prosjektet vil bli
+          presentert her når det er klart for testing og demonstrasjon.
+        </p>
 
-<script>
-(function(){
-var money=100,best=10,busy=false;
-var moneyEl=document.getElementById("money"),winEl=document.getElementById("win"),bestEl=document.getElementById("best");
-var force=document.getElementById("force"),speed=document.getElementById("speed");
-var forceOut=document.getElementById("forceOut"),speedOut=document.getElementById("speedOut");
-var play=document.getElementById("play"),coin=document.getElementById("coinGame"),msg=document.getElementById("message");
+        <div class="tags">
+          <span class="tag">Arkiv</span>
+          <span class="tag">Metadata</span>
+          <span class="tag">Søk &amp; Innsyn</span>
+          <span class="tag">Åpne standarder</span>
+        </div>
+      </div>
 
-for(var r=0;r<8;r++){
- for(var c=0;c<8;c++){
-  var p=document.createElement("i");p.className="peg";
-  p.style.left=(c*12+(r%2?6:0))+"%";p.style.top=(r*12)+"%";
-  document.getElementById("pegs").appendChild(p);
- }
-}
-function ui(){moneyEl.textContent=money;forceOut.textContent=force.value+"%";speedOut.textContent=speed.value+"%";play.disabled=busy||money<1}
-force.oninput=speed.oninput=ui;
+      <div>
+        <span class="project-link">Mer informasjon</span>
+      </div>
+    </div>
+  </section>
 
-document.getElementById("add").onclick=function(){money+=5;msg.textContent="+5 prøvekr lagt til.";ui()};
+  <section id="kommende">
+    <div class="section-title">Kommende prosjekter</div>
 
-play.onclick=function(){
- if(busy||money<1)return;
- money--;busy=true;winEl.textContent="0";msg.textContent="Mynten spretter...";
- coin.style.display="block";ui();
+    <div class="grid-3">
+      <article class="card project-card">
+        <div class="small-icon">⌕</div>
+        <h3>Arkivprosjekt 01</h3>
+        <p>Et kommende prosjekt innen digital arkivforvaltning og tilgjengeliggjøring.</p>
+        <span class="status">Planlegging</span>
+      </article>
 
- var x=50,y=3;
- var vx=(Number(force.value)-50)*0.075;
- var fall=0.7+Number(speed.value)*0.018;
+      <article class="card project-card">
+        <div class="small-icon">□</div>
+        <h3>Arkivprosjekt 02</h3>
+        <p>Et konsept med fokus på søk, struktur og bedre tilgang til informasjon.</p>
+        <span class="status">Idé</span>
+      </article>
 
- var timer=setInterval(function(){
-  y+=fall;x+=vx;vx*=0.985;
-  if(x<5){x=5;vx=Math.abs(vx)*.72}
-  if(x>95){x=95;vx=-Math.abs(vx)*.72}
-  coin.style.left=x+"%";coin.style.top=y+"%";
-  if(y>=82){clearInterval(timer);finish(x)}
- },25);
-};
+      <article class="card project-card">
+        <div class="small-icon">✓</div>
+        <h3>Arkivprosjekt 03</h3>
+        <p>Et fremtidig prosjekt knyttet til bevaring, kvalitet og kontroll.</p>
+        <span class="status">Idé</span>
+      </article>
+    </div>
+  </section>
 
-function finish(x){
- var i=Math.max(0,Math.min(6,Math.floor(x/100*7)));
- var values=[0,2,5,10,5,2,0],v=values[i];
- money+=v;winEl.textContent=v;
- if(v>best){best=v;bestEl.textContent=best}
- msg.textContent=v?"🎉 Gratulerer! Du vant "+v+" kr!":"TAP – prøv igjen!";
- coin.style.display="none";busy=false;ui();
-}
-ui();
-})();
-</script>
+  <section>
+    <div class="card mission">
+      <div class="mission-item">
+        <div class="mission-icon">⌂</div>
+        <h3>For arkivsektoren</h3>
+        <p>Løsninger utviklet med innsikt i behov, arbeidsprosesser og praksis.</p>
+      </div>
+
+      <div class="mission-item">
+        <div class="mission-icon">◎</div>
+        <h3>Med fokus på kvalitet</h3>
+        <p>Struktur, dokumentasjon og standarder er en del av utviklingsarbeidet.</p>
+      </div>
+
+      <div class="mission-item">
+        <div class="mission-icon">◌</div>
+        <h3>For fremtiden</h3>
+        <p>Teknologi som gjør verdifull informasjon mer tilgjengelig og anvendelig.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="eksperimenter">
+    <div class="section-title">Arbeidsområde</div>
+
+    <div class="info-grid">
+      <div class="card info-card">
+        <h3>Teknologier</h3>
+        <div class="tech-list">
+          <div class="tech"><span class="dot"></span>HTML &amp; CSS</div>
+          <div class="tech"><span class="dot"></span>JavaScript</div>
+          <div class="tech"><span class="dot"></span>TypeScript</div>
+          <div class="tech"><span class="dot"></span>GitHub</div>
+          <div class="tech"><span class="dot"></span>OpenAPI</div>
+          <div class="tech"><span class="dot"></span>Åpne standarder</div>
+        </div>
+      </div>
+
+      <div class="card info-card">
+        <h3>Roadmap 2026</h3>
+        <div class="roadmap">
+          <div class="road"><span class="check">✓</span>Project Hub</div>
+          <div class="road"><span class="check">✓</span>Visuell profil</div>
+          <div class="road"><span class="check"></span>Første prosjekt</div>
+          <div class="road"><span class="check"></span>Interaktiv demo</div>
+          <div class="road"><span class="check"></span>Flere prosjektområder</div>
+        </div>
+      </div>
+
+      <div class="card info-card">
+        <h3>Prosjektstatus</h3>
+        <div class="progress">
+          <div class="progress-row">
+            <span>Planlegging</span>
+            <div class="bar"><span style="width:80%"></span></div>
+            <span>80%</span>
+          </div>
+          <div class="progress-row">
+            <span>Utvikling</span>
+            <div class="bar"><span style="width:35%"></span></div>
+            <span>35%</span>
+          </div>
+          <div class="progress-row">
+            <span>Testing</span>
+            <div class="bar"><span style="width:10%"></span></div>
+            <span>10%</span>
+          </div>
+          <div class="progress-row">
+            <span>Lansering</span>
+            <div class="bar"><span style="width:0%"></span></div>
+            <span>0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card about">
+      <div>
+        <div class="section-title">Om Project Hub</div>
+        <h2>Fra idé til løsning.</h2>
+        <p>
+          Dette repositoryet fungerer som en samlet inngangsportal til nye
+          prosjekter, prototyper og digitale eksperimenter. Målet er å utvikle
+          løsninger som er enkle å forstå, praktiske å bruke og mulige å
+          videreutvikle over tid.
+        </p>
+        <p><strong>Idéer → prototyper → testing → ferdige løsninger</strong></p>
+      </div>
+
+      <div>
+        <div class="section-title">Kontakt</div>
+        <p>Prosjektene vil få egne lenker og kontaktpunkter etter hvert som de publiseres.</p>
+
+        <div class="contact">
+          <a href="#" aria-label="GitHub">GH</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="mailto:" aria-label="E-post">@</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Lise V1 &nbsp;•&nbsp; Project Hub &nbsp;•&nbsp; Arkiv. Innsikt. Fremtid.
+</footer>
+
 </body>
 </html>
