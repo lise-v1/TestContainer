@@ -1,689 +1,150 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Project Hub – digitale prosjekter, idéer og eksperimenter for arkivsektoren.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Project Hub – digitale løsninger for arkivsektoren.">
   <title>Project Hub | Arkiv. Innsikt. Fremtid.</title>
-
-  <style>
-    :root {
-      --bg: #f5f6f2;
-      --surface: #ffffff;
-      --surface-soft: #f0f3ed;
-      --text: #18201b;
-      --muted: #657067;
-      --line: #dfe5df;
-      --green: #52705a;
-      --green-dark: #385440;
-      --green-soft: #e4ece3;
-      --accent: #718873;
-      --shadow: 0 10px 35px rgba(30, 45, 34, .07);
-      --radius: 14px;
-      --max: 1120px;
-    }
-
-    * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: min(calc(100% - 40px), var(--max));
-      margin: 0 auto;
-    }
-
-    header {
-      text-align: center;
-      padding: 72px 20px 58px;
-      background:
-        linear-gradient(180deg, #fafbf8 0%, #f5f6f2 100%);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .mark {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 20px;
-      border: 2px solid var(--green);
-      border-radius: 9px;
-      display: grid;
-      place-items: center;
-      color: var(--green);
-      font-size: 24px;
-      position: relative;
-    }
-
-    .mark::before,
-    .mark::after {
-      content: "";
-      position: absolute;
-      border: 2px solid var(--green);
-      border-radius: 5px;
-      width: 28px;
-      height: 8px;
-      left: 11px;
-    }
-
-    .mark::before { top: 11px; }
-    .mark::after { bottom: 11px; }
-
-    .eyebrow {
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--green-dark);
-      margin-bottom: 12px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(42px, 7vw, 70px);
-      line-height: 1.05;
-      letter-spacing: -.045em;
-      font-weight: 650;
-    }
-
-    .hero-copy {
-      max-width: 720px;
-      margin: 22px auto 30px;
-      color: var(--muted);
-      font-size: 18px;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 190px;
-      padding: 13px 20px;
-      border-radius: 8px;
-      border: 1px solid var(--green);
-      font-size: 14px;
-      font-weight: 650;
-      transition: .2s ease;
-    }
-
-    .btn.primary {
-      background: var(--green);
-      color: white;
-    }
-
-    .btn.secondary {
-      background: transparent;
-      color: var(--green-dark);
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 7px 18px rgba(50, 75, 56, .12);
-    }
-
-    main {
-      padding: 42px 0 70px;
-    }
-
-    section {
-      margin-bottom: 34px;
-    }
-
-    .section-title {
-      margin: 0 0 15px;
-      font-size: 13px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--green-dark);
-      font-weight: 750;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .featured {
-      padding: 34px;
-      display: grid;
-      grid-template-columns: 150px 1fr auto;
-      gap: 30px;
-      align-items: center;
-    }
-
-    .project-icon {
-      width: 150px;
-      height: 150px;
-      border-radius: 12px;
-      background: var(--green-soft);
-      display: grid;
-      place-items: center;
-      color: var(--green-dark);
-      font-size: 48px;
-      border: 1px solid #d4dfd2;
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--green-dark);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-    }
-
-    .status::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    h2 {
-      margin: 7px 0 8px;
-      font-size: 30px;
-      letter-spacing: -.025em;
-    }
-
-    .featured p {
-      color: var(--muted);
-      max-width: 590px;
-      margin: 0 0 18px;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-    }
-
-    .tag {
-      background: var(--surface-soft);
-      border: 1px solid var(--line);
-      color: #536057;
-      border-radius: 6px;
-      padding: 5px 9px;
-      font-size: 12px;
-    }
-
-    .project-link {
-      color: var(--green-dark);
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .project-link::after {
-      content: "  →";
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .project-card {
-      padding: 25px;
-      min-height: 210px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .small-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 9px;
-      background: var(--green-soft);
-      display: grid;
-      place-items: center;
-      color: var(--green-dark);
-      font-size: 20px;
-      margin-bottom: 18px;
-    }
-
-    .project-card h3 {
-      margin: 0 0 7px;
-      font-size: 19px;
-    }
-
-    .project-card p {
-      color: var(--muted);
-      font-size: 14px;
-      margin: 0 0 18px;
-    }
-
-    .project-card .status {
-      margin-top: auto;
-      align-self: flex-start;
-      background: var(--surface-soft);
-      padding: 5px 10px;
-      border-radius: 20px;
-    }
-
-    .mission {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: #fafbf8;
-    }
-
-    .mission-item {
-      padding: 28px;
-      border-right: 1px solid var(--line);
-    }
-
-    .mission-item:last-child { border-right: 0; }
-
-    .mission-icon {
-      color: var(--green);
-      font-size: 25px;
-      margin-bottom: 8px;
-    }
-
-    .mission h3 {
-      margin: 0 0 7px;
-      font-size: 17px;
-    }
-
-    .mission p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-
-    .info-card {
-      padding: 25px;
-    }
-
-    .info-card h3 {
-      margin: 0 0 18px;
-      font-size: 14px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--green-dark);
-    }
-
-    .tech-list,
-    .roadmap {
-      display: grid;
-      gap: 9px;
-    }
-
-    .tech,
-    .road {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex: 0 0 auto;
-    }
-
-    .road .check {
-      width: 18px;
-      height: 18px;
-      border: 1px solid #b8c5b9;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: var(--green);
-      font-size: 11px;
-      flex: 0 0 auto;
-    }
-
-    .progress {
-      display: grid;
-      gap: 15px;
-    }
-
-    .progress-row {
-      display: grid;
-      grid-template-columns: 78px 1fr 35px;
-      gap: 10px;
-      align-items: center;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .bar {
-      height: 6px;
-      background: #e5e9e4;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .bar span {
-      display: block;
-      height: 100%;
-      background: var(--green);
-      border-radius: inherit;
-    }
-
-    .about {
-      padding: 32px;
-      display: grid;
-      grid-template-columns: 1.4fr .8fr;
-      gap: 45px;
-    }
-
-    .about h2 {
-      font-size: 25px;
-    }
-
-    .about p {
-      color: var(--muted);
-      max-width: 650px;
-    }
-
-    .contact {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .contact a {
-      width: 43px;
-      height: 43px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      color: var(--green-dark);
-      background: white;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px 20px 35px;
-      color: #7a837c;
-      font-size: 12px;
-      border-top: 1px solid var(--line);
-    }
-
-    @media (max-width: 820px) {
-      .featured,
-      .about {
-        grid-template-columns: 1fr;
-      }
-
-      .project-icon {
-        width: 90px;
-        height: 90px;
-        font-size: 30px;
-      }
-
-      .grid-3,
-      .info-grid,
-      .mission {
-        grid-template-columns: 1fr;
-      }
-
-      .mission-item {
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .mission-item:last-child {
-        border-bottom: 0;
-      }
-
-      .featured {
-        gap: 18px;
-        padding: 25px;
-      }
-
-      header {
-        padding-top: 50px;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .container {
-        width: min(calc(100% - 24px), var(--max));
-      }
-
-      h1 {
-        font-size: 40px;
-      }
-
-      .hero-copy {
-        font-size: 16px;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .progress-row {
-        grid-template-columns: 70px 1fr 30px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-  <div class="mark" aria-hidden="true">▤</div>
-  <div class="eyebrow">Project Hub</div>
+<header class="hero">
+  <div class="archive-mark" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="eyebrow">PROJECT HUB</div>
   <h1>Arkiv. Innsikt. Fremtid.</h1>
-  <p class="hero-copy">
-    Utforsker og utvikler digitale løsninger som kan styrke arkivsektoren
-    gjennom struktur, tilgjengelighet og god brukeropplevelse.
-  </p>
-
-  <div class="actions">
-    <a class="btn primary" href="#prosjekter">Utforsk prosjekter</a>
-    <a class="btn secondary" href="#kommende">Kommende prosjekter</a>
-    <a class="btn secondary" href="#eksperimenter">Eksperimenter</a>
+  <div class="hero-rule"><i></i></div>
+  <p class="hero-text">Utforsker og utvikler digitale løsninger som styrker arkivsektoren –<br>for kunnskap, åpenhet og trygg bevaring.</p>
+  <div class="hero-actions">
+    <a class="button button-green" href="#prosjekter">▦ &nbsp; UTFORSK PROSJEKTER</a>
+    <a class="button" href="#kommende">□ &nbsp; KOMMENDE PROSJEKTER</a>
+    <a class="button" href="#eksperimenter">△ &nbsp; EKSPERIMENTER</a>
   </div>
 </header>
 
-<main class="container">
+<main class="page">
 
-  <section id="prosjekter">
-    <div class="section-title">Featured project</div>
+  <section id="prosjekter" class="panel featured">
+    <div class="section-label">FEATURED PROJECT</div>
 
-    <div class="card featured">
-      <div class="project-icon" aria-hidden="true">▤</div>
+    <div class="featured-grid">
+      <div class="project-symbol">
+        <div class="archive-box" aria-hidden="true"><span></span><b></b><i></i></div>
+      </div>
 
-      <div>
-        <span class="status">Planlegging</span>
-        <h2>Første prosjekt kommer</h2>
-        <p>
-          Project Hub er under etablering. Det første prosjektet vil bli
-          presentert her når det er klart for testing og demonstrasjon.
-        </p>
-
+      <div class="featured-main">
+        <div class="status"><span></span> PÅGÅENDE</div>
+        <h2>Arkivnøkkel</h2>
+        <p>Et verktøy for strukturert beskrivelse, organisering og tilgjengeliggjøring av arkivmateriale.</p>
         <div class="tags">
-          <span class="tag">Arkiv</span>
-          <span class="tag">Metadata</span>
-          <span class="tag">Søk &amp; Innsyn</span>
-          <span class="tag">Åpne standarder</span>
+          <span>Metadata</span><span>Arkivstruktur</span><span>Søk &amp; Innsyn</span><span>Standarder</span>
+        </div>
+        <div class="tech-row">
+          <span>◎ &nbsp; Web</span><span>▣ &nbsp; TypeScript</span><span>♧ &nbsp; PostgreSQL</span><span>⚙ &nbsp; OpenAPI</span>
         </div>
       </div>
 
+      <div class="feature-list">
+        <div>▤ <span>Effektiv katalogisering</span></div>
+        <div>♙ <span>Sikker tilgangsstyring</span></div>
+        <div>✧ <span>Åpne standarder</span></div>
+        <div>♜ <span>Skalerbar arkitektur</span></div>
+        <a href="#om">Les mer om prosjektet&nbsp; →</a>
+      </div>
+    </div>
+
+    <div id="kommende" class="subsection">
+      <h3 class="subheading">KOMMENDE PROSJEKTER</h3>
+      <div class="project-grid">
+        <article class="mini-card">
+          <div class="mini-icon">▧</div>
+          <div>
+            <h4>Arkivsøk 2.0</h4>
+            <p>Ny generasjon søkeløsning med bedre relevans og sammenstilling av informasjon.</p>
+            <span class="mini-status"><b></b> UNDER UTVIKLING</span>
+          </div>
+        </article>
+        <article class="mini-card">
+          <div class="mini-icon">♢</div>
+          <div>
+            <h4>Bevaringsvakt</h4>
+            <p>Verktøy for digital langtidsbevaring og integritetskontroll.</p>
+            <span class="mini-status"><b></b> PLANLEGGING</span>
+          </div>
+        </article>
+        <article class="mini-card">
+          <div class="mini-icon">♙</div>
+          <div>
+            <h4>Brukerportal</h4>
+            <p>Selvbetjeningsløsning for innsyn, forespørsler og kommunikasjon.</p>
+            <span class="mini-status"><b></b> PLANLEGGING</span>
+          </div>
+        </article>
+      </div>
+      <a class="all-link" href="#roadmap">Se alle kommende prosjekter&nbsp; →</a>
+    </div>
+  </section>
+
+  <section class="values panel-soft">
+    <div><strong>⌂</strong><h3>For arkivsektoren</h3><p>Løsninger utviklet med innsikt i sektorens behov, regelverk og arbeidsprosesser.</p></div>
+    <div><strong>◎</strong><h3>Med fokus på kvalitet</h3><p>Standarder, struktur og dokumentasjon er en naturlig del av utviklingsarbeidet.</p></div>
+    <div><strong>♧</strong><h3>For fremtiden</h3><p>Bærekraftige løsninger som ivaretar både data, mennesker og samfunn.</p></div>
+  </section>
+
+  <section id="roadmap" class="lower-grid">
+    <article class="panel info-card">
+      <h3>TEKNOLOGIER</h3>
+      <ul class="clean-list">
+        <li>▣ &nbsp; TypeScript</li><li>⬡ &nbsp; Node.js</li><li>♧ &nbsp; PostgreSQL</li>
+        <li>✣ &nbsp; React</li><li>◉ &nbsp; Docker</li><li>○ &nbsp; Open Standards</li>
+      </ul>
+      <a class="all-link" href="#">Se full oversikt&nbsp; →</a>
+    </article>
+
+    <article class="panel info-card">
+      <h3>ROADMAP 2026</h3>
+      <div class="roadmap">
+        <div><span>✓</span><b>Q1</b> Arkivnøkkel – MVP <strong>✓</strong></div>
+        <div><span>✓</span><b>Q2</b> Pilotkunder og tilbakemeldinger <strong>✓</strong></div>
+        <div><span>✓</span><b>Q3</b> Arkivsøk 2.0 – prototype <strong>✓</strong></div>
+        <div><span>✓</span><b>Q3</b> Bevaringsvakt – første versjon <strong>○</strong></div>
+        <div><span>✓</span><b>Q4</b> Brukerportal – konsept <strong>○</strong></div>
+      </div>
+      <a class="all-link" href="#">Se detaljert veikart&nbsp; →</a>
+    </article>
+
+    <article class="panel info-card">
+      <h3>PROSJEKTSTATUS</h3>
+      <div class="progress"><label>Planlegging <span>80%</span></label><i><b style="width:80%"></b></i></div>
+      <div class="progress"><label>Utvikling <span>55%</span></label><i><b style="width:55%"></b></i></div>
+      <div class="progress"><label>Testing <span>25%</span></label><i><b style="width:25%"></b></i></div>
+      <div class="progress"><label>Lansering <span>10%</span></label><i><b style="width:10%"></b></i></div>
+      <div class="progress"><label>Drift <span>0%</span></label><i><b style="width:0%"></b></i></div>
+      <small>Status oppdateres fortløpende.</small>
+    </article>
+  </section>
+
+  <section id="om" class="bottom-grid">
+    <article class="panel about-card">
+      <div class="box-stack" aria-hidden="true"><span></span><span></span></div>
       <div>
-        <span class="project-link">Mer informasjon</span>
+        <h3>OM</h3>
+        <p>Jeg brenner for å utvikle digitale løsninger som gjør arkiv mer tilgjengelig, forståelig og verdifullt – nå og i fremtiden.</p>
+        <p>Dette er en samling av prosjekter, ideer og eksperimenter som skal bidra til en sterkere arkivsektor.</p>
       </div>
-    </div>
-  </section>
+    </article>
 
-  <section id="kommende">
-    <div class="section-title">Kommende prosjekter</div>
-
-    <div class="grid-3">
-      <article class="card project-card">
-        <div class="small-icon">⌕</div>
-        <h3>Arkivprosjekt 01</h3>
-        <p>Et kommende prosjekt innen digital arkivforvaltning og tilgjengeliggjøring.</p>
-        <span class="status">Planlegging</span>
-      </article>
-
-      <article class="card project-card">
-        <div class="small-icon">□</div>
-        <h3>Arkivprosjekt 02</h3>
-        <p>Et konsept med fokus på søk, struktur og bedre tilgang til informasjon.</p>
-        <span class="status">Idé</span>
-      </article>
-
-      <article class="card project-card">
-        <div class="small-icon">✓</div>
-        <h3>Arkivprosjekt 03</h3>
-        <p>Et fremtidig prosjekt knyttet til bevaring, kvalitet og kontroll.</p>
-        <span class="status">Idé</span>
-      </article>
-    </div>
-  </section>
-
-  <section>
-    <div class="card mission">
-      <div class="mission-item">
-        <div class="mission-icon">⌂</div>
-        <h3>For arkivsektoren</h3>
-        <p>Løsninger utviklet med innsikt i behov, arbeidsprosesser og praksis.</p>
-      </div>
-
-      <div class="mission-item">
-        <div class="mission-icon">◎</div>
-        <h3>Med fokus på kvalitet</h3>
-        <p>Struktur, dokumentasjon og standarder er en del av utviklingsarbeidet.</p>
-      </div>
-
-      <div class="mission-item">
-        <div class="mission-icon">◌</div>
-        <h3>For fremtiden</h3>
-        <p>Teknologi som gjør verdifull informasjon mer tilgjengelig og anvendelig.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="eksperimenter">
-    <div class="section-title">Arbeidsområde</div>
-
-    <div class="info-grid">
-      <div class="card info-card">
-        <h3>Teknologier</h3>
-        <div class="tech-list">
-          <div class="tech"><span class="dot"></span>HTML &amp; CSS</div>
-          <div class="tech"><span class="dot"></span>JavaScript</div>
-          <div class="tech"><span class="dot"></span>TypeScript</div>
-          <div class="tech"><span class="dot"></span>GitHub</div>
-          <div class="tech"><span class="dot"></span>OpenAPI</div>
-          <div class="tech"><span class="dot"></span>Åpne standarder</div>
-        </div>
-      </div>
-
-      <div class="card info-card">
-        <h3>Roadmap 2026</h3>
-        <div class="roadmap">
-          <div class="road"><span class="check">✓</span>Project Hub</div>
-          <div class="road"><span class="check">✓</span>Visuell profil</div>
-          <div class="road"><span class="check"></span>Første prosjekt</div>
-          <div class="road"><span class="check"></span>Interaktiv demo</div>
-          <div class="road"><span class="check"></span>Flere prosjektområder</div>
-        </div>
-      </div>
-
-      <div class="card info-card">
-        <h3>Prosjektstatus</h3>
-        <div class="progress">
-          <div class="progress-row">
-            <span>Planlegging</span>
-            <div class="bar"><span style="width:80%"></span></div>
-            <span>80%</span>
-          </div>
-          <div class="progress-row">
-            <span>Utvikling</span>
-            <div class="bar"><span style="width:35%"></span></div>
-            <span>35%</span>
-          </div>
-          <div class="progress-row">
-            <span>Testing</span>
-            <div class="bar"><span style="width:10%"></span></div>
-            <span>10%</span>
-          </div>
-          <div class="progress-row">
-            <span>Lansering</span>
-            <div class="bar"><span style="width:0%"></span></div>
-            <span>0%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="card about">
-      <div>
-        <div class="section-title">Om Project Hub</div>
-        <h2>Fra idé til løsning.</h2>
-        <p>
-          Dette repositoryet fungerer som en samlet inngangsportal til nye
-          prosjekter, prototyper og digitale eksperimenter. Målet er å utvikle
-          løsninger som er enkle å forstå, praktiske å bruke og mulige å
-          videreutvikle over tid.
-        </p>
-        <p><strong>Idéer → prototyper → testing → ferdige løsninger</strong></p>
-      </div>
-
-      <div>
-        <div class="section-title">Kontakt</div>
-        <p>Prosjektene vil få egne lenker og kontaktpunkter etter hvert som de publiseres.</p>
-
-        <div class="contact">
-          <a href="#" aria-label="GitHub">GH</a>
-          <a href="#" aria-label="LinkedIn">in</a>
-          <a href="mailto:" aria-label="E-post">@</a>
-        </div>
-      </div>
-    </div>
+    <article id="eksperimenter" class="panel contact-card">
+      <h3>KONTAKT</h3>
+      <p>Ta gjerne kontakt for samarbeid eller spørsmål.</p>
+      <div class="contact-buttons"><a href="#">GH</a><a href="#">in</a><a href="#">✉</a></div>
+    </article>
   </section>
 
 </main>
 
-<footer>
-  © 2026 Lise V1 &nbsp;•&nbsp; Project Hub &nbsp;•&nbsp; Arkiv. Innsikt. Fremtid.
-</footer>
-
+<footer>© 2026 Lise V1 <span>•</span> Built with passion for archives</footer>
 </body>
 </html>
