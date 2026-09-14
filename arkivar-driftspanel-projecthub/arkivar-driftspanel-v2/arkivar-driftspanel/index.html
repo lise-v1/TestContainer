@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arkivar Driftspanel | Project Hub</title>
+  <meta name="description" content="Driftsoversikt for arkivrelaterte tjenester og integrasjoner.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="Til Project Hub">
+    <span class="brand-mark">◇</span>
+    <span><strong>Project Hub</strong><small>Arkiv. Innsikt. Fremtid.</small></span>
+  </a>
+  <nav aria-label="Hovedmeny">
+    <a class="active" href="#oversikt">Oversikt</a>
+    <a href="#tjenester">Tjenester</a>
+    <a href="#eformidling">eFormidling</a>
+    <a href="#hendelser">Hendelser</a>
+    <a href="#kontrollpunkter">Kontrollpunkter</a>
+    <a href="#rapporter">Rapporter</a>
+  </nav>
+  <button class="icon-button" aria-label="Søk">⌕</button>
+  <div class="avatar" aria-label="Arkivar">AO</div>
+</header>
+
+<main>
+<section class="hero" id="oversikt">
+  <div class="hero-copy">
+    <p class="kicker">PROJECT HUB</p>
+    <h1>Arkivar<br>Driftspanel</h1>
+    <p class="tagline">Arkiv. Innsikt. Fremtid.</p>
+    <p class="intro">Samlet oversikt over driftsstatus for kritiske arkivtjenester og integrasjoner.</p>
+    <div class="actions">
+      <button id="refresh" class="primary">↻ &nbsp; Oppdater status</button>
+      <span id="updated">Sist oppdatert: nå</span>
+    </div>
+  </div>
+  <div class="line-art" aria-hidden="true">
+    <span class="sun"></span><span class="cloud c1"></span><span class="cloud c2"></span>
+    <div class="building b1"></div><div class="building b2"></div><div class="building b3"></div>
+    <div class="tree t1"></div><div class="tree t2"></div>
+  </div>
+</section>
+
+<section class="summary" aria-label="Samlet status">
+  <article class="summary-item status-main">
+    <div class="status-icon ok">✓</div>
+    <div><small>Samlet driftsstatus</small><strong>Operativ</strong><p>Alle tjenester fungerer normalt</p></div>
+  </article>
+  <article class="summary-item"><div class="status-icon neutral">⌘</div><div><b id="operational">9</b><small>operative</small><p>av 10 tjenester</p></div></article>
+  <article class="summary-item"><div class="status-icon warn">△</div><div><b id="warnings">1</b><small>varsel</small><p>Krever oppmerksomhet</p></div></article>
+  <article class="summary-item"><div class="status-icon incident">!</div><div><b id="incidents">0</b><small>hendelser</small><p>Ingen aktive hendelser</p></div></article>
+</section>
+
+<section class="content-section" id="tjenester">
+  <div class="section-heading"><h2>Tjenester</h2><span>10 overvåkede tjenester</span></div>
+  <div class="services" id="services"></div>
+</section>
+
+<section class="two-col" id="eformidling">
+  <article class="panel">
+    <div class="panel-heading"><h2>eFormidling – kanaler og meldingsflyt</h2><a href="#eformidling">Se full oversikt →</a></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Kanal</th><th>Status</th><th>Kø</th><th>Siste melding</th><th>Responstid</th></tr></thead>
+        <tbody id="channelRows"></tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="panel" id="kontrollpunkter">
+    <div class="panel-heading"><h2>Kontrollpunkter</h2><a href="#kontrollpunkter">Se alle →</a></div>
+    <div class="checks" id="checks"></div>
+  </article>
+</section>
+
+<section class="incident-panel" id="hendelser">
+  <div>
+    <h2>Aktive hendelser</h2>
+    <div class="incident-empty"><span>✓</span><div><strong>Det er ingen aktive hendelser</strong><small>Alle systemer er operative</small></div></div>
+  </div>
+  <a href="#hendelser">Se alle hendelser →</a>
+</section>
+</main>
+
+<footer id="rapporter">
+  <a class="footer-brand" href="../index.html"><span class="brand-mark">◇</span><span><strong>Project Hub</strong><small>Arkiv. Innsikt. Fremtid.</small></span></a>
+  <nav><a href="../index.html">Om Project Hub</a><a href="#">Personvern</a><a href="#">Tilgjengelighet</a><a href="#">Kontakt oss</a></nav>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
